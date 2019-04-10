@@ -16,10 +16,10 @@ namespace eosio {
         public:
         using contract::contract;
         [[eosio::action]]
-        void regpatient(name uname,string age, string address, string email, string city, string district, string state);
+        void regpatient(name uname,string bdate, string address, string email, string city, string district, string state);
 
         [[eosio::action]]
-        void regdoctor(name uname, name hname, uint64_t age, string bgroup, string expertise, uint64_t experiance, string contactnum, string email, string address, string city, string district, string state);
+        void regdoctor(name uname, name hname, uint64_t bdate, string bgroup, string expertise, uint64_t experiance, string contactnum, string email, string address, string city, string district, string state);
 
         [[eosio::action]]
         void reghospital(name hname, std::vector<string> services, string contact, string email, string address, string city, string district, string state);
@@ -31,12 +31,19 @@ namespace eosio {
         void hosapproval(name admin, name hname, bool approval);
 
         [[eosio::action]]
-        void docaction(name dname, name pname, string );
+        void docaction(name dname, name pname, string sugerfasting, string sugarnormal, string bloodpressure, string note );
+
+        [[eosio::action]]
+        void hosaction(name hname, name dname, bool approval );
+
+        // action for patient for updating information
+        // [[eosio::action]] 
+        // void paction()
 
         private:
          struct [[eosio::table]] patient {
             name pname;
-            uint64_t age;
+            uint64_t bdate;
             string bgroup;
             string sugarfasting;
             string sugarnormal;
@@ -57,7 +64,7 @@ namespace eosio {
             name dname;
             name hname;
             bool approval;
-            uint64_t age;
+            uint64_t bdate;
             string bgroup;
             string expertise;
             uint64_t experiance;
