@@ -55,10 +55,12 @@ namespace eosio {
             string state;
             string note;
 
-            name primary_key()const { return pname.symbol.code().raw(); }
+           // EOSLIB_SERIALIZE( patient ,(pname) (bdate) (bgroup) (sugarfasting) (sugarnormal) (bloodpressure) (email) (address) (city) (district) (state) (note) );
+
+            name primary_key()const { return pname; }
          };
 
-         typedef eosio::multi_index< "patient"_n, account > patient;
+         typedef eosio::multi_index< "patients"_n, patient > patientt;
 
          struct [[eosio::table]] doctor {
             name dname;
@@ -75,10 +77,10 @@ namespace eosio {
             string district;
             string state;
 
-            name primary_key()const { return dname.symbol.code().raw(); }
+            name primary_key()const { return dname; }
         };
 
-         typedef eosio::multi_index< "doctor"_n, account > doctor;
+         typedef eosio::multi_index< "doctors"_n, doctor > doctort;
 
           struct [[eosio::table]] hospital {
             name hname;
@@ -92,12 +94,12 @@ namespace eosio {
             string district;
             string state;
 
-            name primary_key()const { return hname.symbol.code().raw(); }
+            name primary_key()const { return hname; }
          };
 
-        typedef eosio::multi_index< "hospital"_n, account > hospital;
+        typedef eosio::multi_index< "hospitals"_n, hospital > hospitalt;
         
     
-    }   
+    };   
 
 }

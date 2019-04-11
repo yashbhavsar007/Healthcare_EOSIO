@@ -1,5 +1,5 @@
 
-#include <healthcare.hpp>
+#include "healthcare.hpp"
 
 namespace eosio {
 
@@ -8,8 +8,8 @@ namespace eosio {
     {   
         require_auth( uname );
         
-        patient ptable( name, uname.code().raw() );
-        auto existing = ptable.find( uname.code().raw() );
+        patientt ptable( _self, uname.value );
+        auto existing = ptable.find( uname);
         check( existing == ptable.end(), "Patient already exists in our record!" );
 
         // Emplacing records on tables and left some fields blank intentionally because patient doesn't have rights to enter blank fields.
@@ -37,7 +37,7 @@ namespace eosio {
 
         require_auth( uname );
         
-        doctor dtable( name, uname.code().raw() );
+        doctort dtable( name, uname.code().raw() );
         auto existing = dtable.find( uname.code().raw() );
         check( existing == dtable.end(), "Doctor already exists in our record!" );
 
@@ -64,7 +64,7 @@ namespace eosio {
     {
         require_auth(hname);
 
-        hospital htable(name, hname.code().raw());
+        hospitalt htable(name, hname.code().raw());
         auto existing = htable.find(hname.code.raw());
         check( existing == htable.end(), "Hospital already exists in our record!");
 
@@ -87,14 +87,14 @@ namespace eosio {
     {
         require_auth( hname );
         
-        doctor dtable( name, dname.code().raw() );
+        doctort dtable( name, dname.code().raw() );
         auto dexisting = dtable.find( dname.code().raw() );
-        check( existing == dtable.end(), "Doctor already exists in our record!" );
+        check( dexisting != dtable.end(), "Doctor not exists in our record!" );
 
 
-        hospital htable( name, hname.code().raw());
+        hospitalt htable( name, hname.code().raw());
         auto hexisting = htable.find(hname.code.raw());
-        check( existing == htable.end(), "Hospital already exists in our record!");
+        check( hexisting != htable.end(), "Hospital not exists in our record!");
 
         dtable.modify(dexisting,_self,[&]( auto &d ){
 
@@ -116,15 +116,33 @@ namespace eosio {
         require_auth( _self );
         
         
-        hospital htable( name, hname.code().raw());
+        hospitalt htable( name, hname.code().raw());
         auto hexisting = htable.find(hname.code.raw());
-        check( existing == htable.end(), "Hospital already exists in our record!");
+        check( hexisting != htable.end(), "Hospital not exists in our record!");
 
         htable.modify(hexisting,_self,[&]( auto &h ){
 
             h.approval = approval;
 
         });
+    }
+
+
+    void healthcare::docaction(name dname, name pname, string sugerfasting, string sugarnormal, string bloodpressure, string note )
+    {
+        require_auth(dname);
+
+        patientt ptable( name, pname.code().raw() );
+        auto existing = ptable.find( pname.code().raw() );
+        check( existing != ptable.end(), "Patient not exists in our record!" );
+
+        ptable.modify( existing,_self,[&]( auto &p){
+            p.sugerfasting  = sugerfasting;
+            p.sugarnormal   = sugarnormal;
+            p.bloodpressure = bloodpressure;
+            p.note          = note;
+        })
+
     }
 
 }
