@@ -28,13 +28,13 @@ namespace eosio {
         void docapproval(name hname, name dname, bool approval);
 
         [[eosio::action]]
-        void hosapproval(name admin, name hname, bool approval);
+        void hosapproval(name hname, bool approval);
 
         [[eosio::action]]
         void docaction(name dname, name pname, string sugerfasting, string sugarnormal, string bloodpressure, string note );
 
-        [[eosio::action]]
-        void hosaction(name hname, name dname, bool approval );
+        // [[eosio::action]]
+        // void hosaction(name hname, name dname, bool approval );
 
         // action for patient for updating information
         // [[eosio::action]] 
@@ -63,7 +63,7 @@ namespace eosio {
          struct [[eosio::table]] doctor {
             name dname;
             name hname;
-            bool approval;
+            bool approval = "false";
             uint64_t bdate;
             string bgroup;
             string expertise;
@@ -85,7 +85,7 @@ namespace eosio {
             bool approval;
             uint64_t numofdoc;
             std::vector<string> services;
-            std::vector<name> doctros;
+            std::vector<name> doctors;
             string email;
             string address;
             string city;
