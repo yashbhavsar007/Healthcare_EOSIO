@@ -1,0 +1,13 @@
+{
+    "files.associations": {
+        "__functional_base": "cpp",
+        "atomic": "cpp",
+        "iterator": "cpp",
+        "limits": "cpp",
+        "memory": "cpp",
+        "tuple": "cpp",
+        "type_traits": "cpp",
+        "typeinfo": "cpp",
+        "iosfwd": "cpp"
+    }
+}

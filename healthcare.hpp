@@ -1,7 +1,7 @@
 #pragma once 
 
-#include <eosiolib/asset.hpp>
-#include <eosiolib/eosio.hpp>
+#include <eosio/asset.hpp>
+#include <eosio/eosio.hpp>
 
 #include<string>
            
@@ -16,13 +16,13 @@ namespace eosio {
         public:
         using contract::contract;
         [[eosio::action]]
-        void regpatient(name uname,string bdate, string address, string email, string city, string district, string state);
+        void regpatient(name uname, uint64_t bdate, string address, string email, string city, string district, string state);
 
         [[eosio::action]]
         void regdoctor(name uname, name hname, uint64_t bdate, string bgroup, string expertise, uint64_t experiance, string contactnum, string email, string address, string city, string district, string state);
 
         [[eosio::action]]
-        void reghospital(name hname, std::vector<string> services, string contact, string email, string address, string city, string district, string state);
+        void reghospital(name hname, std::vector<string> services, std::vector<name> doctors, string contact, string email, string address, string city, string district, string state);
 
         [[eosio::action]]
         void docapproval(name hname, name dname, bool approval);
@@ -57,7 +57,7 @@ namespace eosio {
 
            // EOSLIB_SERIALIZE( patient ,(pname) (bdate) (bgroup) (sugarfasting) (sugarnormal) (bloodpressure) (email) (address) (city) (district) (state) (note) );
 
-            name primary_key()const { return pname; }
+            uint64_t primary_key()const { return pname.value; }
          };
 
          typedef eosio::multi_index< "patients"_n, patient > patientt;
@@ -77,7 +77,7 @@ namespace eosio {
             string district;
             string state;
 
-            name primary_key()const { return dname; }
+            uint64_t primary_key()const { return dname.value; }
         };
 
          typedef eosio::multi_index< "doctors"_n, doctor > doctort;
@@ -94,7 +94,7 @@ namespace eosio {
             string district;
             string state;
 
-            name primary_key()const { return hname; }
+            uint64_t primary_key()const { return hname.value; }
          };
 
         typedef eosio::multi_index< "hospitals"_n, hospital > hospitalt;
