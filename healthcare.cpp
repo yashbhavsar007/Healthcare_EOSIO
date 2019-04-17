@@ -1,5 +1,5 @@
 
-#include "/Users/yudizsolutions/Blockchain/EOS/Healthcare/healthcare/healthcare.hpp"
+#include "healthcare.hpp"
 namespace eosio {
 
     // Action for registeering patient on eos blockchain
